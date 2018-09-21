@@ -5,13 +5,11 @@ syntax = "proto3";
 package dbrpc;
 
 /**
- * Service for managing secrets such as passwords or tokens.
+ * Service interface for adding a record.
  */
 service Records {
-    /// Stores a record.
+    /// Store stores a new record if it doesn't already exist. If it does, it updates it.
     rpc Store(StoreRequest) returns (StoreResponse) {}
-    /// Updates a record
-    rpc Update(UpdateRequest) returns (UpdateResponse) {}
 }
 
 /**
@@ -35,18 +33,4 @@ message Record{
     string Name              = 2; /// Name of the person
     string Email             = 3; /// Email of the person
     string MobileNumber      = 4; /// Mobile number of the person
-}
-
-/**
- * Update an existing record.
- */
-message UpdateRequest {
-    Record record = 1; /// The key to store the secret against.
-}
-
-/**
- * Update an existing response.
- */
-message UpdateResponse {
-    Record record = 1; /// The key to store the secret against.
 }
