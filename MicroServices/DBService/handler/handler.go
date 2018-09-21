@@ -3,8 +3,8 @@ package handler
 import (
 	"fmt"
 	"golang.org/x/net/context"
-	mongo "dbstore/MicroServices/DBService/mongo"
-	rpc "dbstore/MicroServices/grpc"
+	mongo "DBStore/MicroServices/DBService/mongo"
+	rpc "DBStore/MicroServices/grpc"
 	)
 
 // Server is used to implement handler side code.
@@ -31,9 +31,4 @@ func (s *Server) Store(ctx context.Context, in *rpc.StoreRequest) (resp *rpc.Sto
 		return nil, fmt.Errorf("error in adding mongo record id %s; %s", in.Record.ID, err)
 	}
 	return &rpc.StoreResponse{}, nil
-}
-
-//Update updates an existing store
-func (s *Server) Update(ctx context.Context, in *rpc.UpdateRequest) (*rpc.UpdateResponse, error) {
-	return &rpc.UpdateResponse{}, nil
 }

@@ -5,8 +5,8 @@
 package main
 
 import (
-	"dbstore/MicroServices/DBService/handler"
-	pb "dbstore/MicroServices/grpc"
+	"DBStore/MicroServices/DBService/handler"
+	pb "DBStore/MicroServices/grpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"

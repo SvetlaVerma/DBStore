@@ -1,7 +1,7 @@
 package mongo
 
 import (
-	"dbstore/MicroServices/grpc"
+	grpc "DBStore/MicroServices/grpc"
 	"fmt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
