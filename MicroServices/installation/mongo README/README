@@ -1,0 +1,11 @@
+#Mongo opening instructions
+
+## Install MongoDB
+
+## Start the Database
+- open a terminal and type
+  mongod
+
+## Start the mongo shell (Needed if you want to quickly verify the record you have added programmatically)
+- open a new terminal and type:
+  mongo --host 127.0.0.1:27017
