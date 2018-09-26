@@ -1,9 +1,10 @@
-# Goal of this repo is to create microservices to parse a csv file and store the records read in MongoDB.
+# Goal of this repo:
+ Create microservices to parse a csv file and store the records in MongoDB as they are being read.
 
 ## Mongo start instructions
-- Download mongodb macOS package using link https://docs.mongodb.com/manual/tutorial/install-mongodb-enterprise-on-os-x/
 
 ## Install MongoDB
+- Download mongodb macOS package using link https://docs.mongodb.com/manual/tutorial/install-mongodb-enterprise-on-os-x/
 
 ## Start the Database
 - open a terminal and type
@@ -24,7 +25,7 @@ There are two micro services created:
   (eg from MongoDB to map/postgresql, the front end of the service handler.go will not change)
 
 ## GRPC is the interface between the two micro services
-- I have created add and update rpcs in db.proto but have implemented only Add rpc currently.
+- I have created add and delete rpcs in db.proto.
 
 ## How to run it:
 
