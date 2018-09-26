@@ -29,6 +29,23 @@ func openCSV(path string) (csvFile *os.File, err error) {
 	return
 }
 
+//TODO move deleteRecord into a separate package
+func DeleteRecord(recordID string, conn * grpc.ClientConn) (err error) {
+	//and now delete
+	//TODO: move the delete to another package
+	dbClient := pb.NewRecordsClient(conn)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+
+	deleteRequest := &pb.DeleteRequest{ID: recordID}
+	defer cancel()
+	_, err = dbClient.Delete(ctx, deleteRequest)
+	if err != nil {
+		return fmt.Errorf("error in deleting ID %s: %s", deleteRequest.ID, err)
+	}
+	log.Printf("ID %s successfully deleted", deleteRequest.ID)
+	return
+}
+
 func Parse(path string, conn * grpc.ClientConn) (err error) {
 
 	csvFile, err := openCSV(path)

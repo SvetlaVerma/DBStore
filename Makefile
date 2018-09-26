@@ -7,8 +7,9 @@ clean:
 	cd ${CURDIR}
 	rm -f ${SVCAPPNAME}
 
-proto: cd ${CURDIR}/grpc;
-    protoc -I dbrpc/ dbrpc/db.proto --go_out=plugins=grpc:dbrpc
+protoc:
+	cd ${CURDIR}/MicroServices;
+	protoc -I grpc/ grpc/db.proto --go_out=plugins=grpc:grpc
 
 run:
 	cd ${CURDIR}/MicroServices/DBService;go build; ./DBService &

@@ -10,13 +10,15 @@ package dbrpc;
 service Records {
     /// Store stores a new record if it doesn't already exist. If it does, it updates it.
     rpc Store(StoreRequest) returns (StoreResponse) {}
+    /// Delete deletes a record.
+    rpc Delete(DeleteRequest) returns (DeleteResponse) {}
 }
 
 /**
  * Store a record.
  */
 message StoreRequest {
-    Record record = 1; /// The key to store the secret against.
+    Record record = 1; /// The record to store.
 }
 
 /**
@@ -33,4 +35,17 @@ message Record{
     string Name              = 2; /// Name of the person
     string Email             = 3; /// Email of the person
     string MobileNumber      = 4; /// Mobile number of the person
+}
+
+/**
+ * Delete a record.
+ */
+message DeleteRequest {
+    string ID = 1; /// The record to be deleted.
+}
+
+/**
+ * Response to delete record request.
+ */
+message DeleteResponse {
 }

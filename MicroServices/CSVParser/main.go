@@ -6,6 +6,7 @@ package main
 
 import (
 	"dbstore/MicroServices/CSVParser/parser"
+	"fmt"
 	"google.golang.org/grpc"
 	"log"
 	"os"
@@ -13,7 +14,7 @@ import (
 )
 
 const (
-	address     = "localhost:50052"
+	address     = "localhost:50053"
 	CSVFilePath = "$PWD"
 )
 
@@ -29,6 +30,13 @@ func main() {
 
 	//now parse the file.
 	err = parser.Parse(path, conn)
+	if err != nil {
+		log.Fatalf("error parsing file: %v", err)
+	}
+
+	//TODO move deletion to another package.
+	fmt.Printf("========================Time to delete one of the record===============================")
+	err = parser.DeleteRecord("100", conn)
 	if err != nil {
 		log.Fatalf("error parsing file: %v", err)
 	}

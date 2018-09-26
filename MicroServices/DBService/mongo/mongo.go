@@ -38,7 +38,7 @@ func (session* Session) Init() (err error) {
 		// replica set addrs...
 	}
 	const (
-		Database   = "myDB"
+		Database   = "testDB"
 		Collection = "rand"
 	)
 	mgoSession, err := mgo.DialWithInfo(&mgo.DialInfo{
@@ -100,7 +100,7 @@ func (session* Session) Add(record *grpc.Record) (err error) {
 	fmt.Printf("mongo package Add. reached here: %s\n", record.ID)
 	if (session.collection == nil) {
 		log.Fatalf("collection fatal", err)
-		return fmt.Errorf("collection nil" )
+		return fmt.Errorf("error adding record. collection nil" )
 	}
 
 	// check if the record already exists
@@ -119,12 +119,31 @@ func (session* Session) Add(record *grpc.Record) (err error) {
 	//now check that it is really added/updated
 	err = session.collection.Find(bson.M{"id": record.ID}).One(&existingRecord)
 	if err != nil {
-		return fmt.Errorf("error in Adding/updating record: %s", err)
+		return fmt.Errorf("error adding record. Adding/updating record: %s", err)
 	}
 	return
 }
 
-func (session* Session) Update(id string, record *grpc.Record) (err error) {
-	//TODO: implement update
+func (session* Session) Delete(recordID string) (err error) {
+	fmt.Printf("mongo package Delete: %s\n", recordID)
+	if (session.collection == nil) {
+		log.Fatalf("collection fatal", err)
+		return fmt.Errorf("collection nil" )
+	}
+	var existingRecord Record
+	// check if the record already exists
+	err = session.collection.Find(bson.M{"id": recordID}).One(&existingRecord)
+	if err != nil {
+		fmt.Println("error in finding record %s: %s", recordID, err)
+		return fmt.Errorf("error in Deleting record %s: %s", recordID, err)
+	}
+	fmt.Printf("found record to delete. name %s, email id %s id %s mobile number %s\n",
+		existingRecord.Name, existingRecord.Email, existingRecord.MobileNumber)
+	selector := bson.M{"id": recordID, "name": existingRecord.Name, "mobile_snumber": existingRecord.MobileNumber, "email": existingRecord.Email}
+	err = session.collection.Remove(selector)
+	if err != nil {
+		return fmt.Errorf("error in deleting record %s: %s", existingRecord.ID, err)
+	}
+	fmt.Println("record %s successfully deleted", recordID)
 	return
 }

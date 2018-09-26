@@ -22,7 +22,7 @@ func NewServer() (server *Server, err error) {
 	return
 }
 
-// Store adds a new record
+// Store adds a new record or updates an existing record
 func (s *Server) Store(ctx context.Context, in *rpc.StoreRequest) (resp *rpc.StoreResponse, err error) {
 	fmt.Printf("store request received for : %s\n", in.Record.ID)
 
@@ -31,4 +31,15 @@ func (s *Server) Store(ctx context.Context, in *rpc.StoreRequest) (resp *rpc.Sto
 		return nil, fmt.Errorf("error in adding mongo record id %s; %s", in.Record.ID, err)
 	}
 	return &rpc.StoreResponse{}, nil
+}
+
+// Delete deletes a record
+func (s *Server) Delete(ctx context.Context, in *rpc.DeleteRequest) (resp *rpc.DeleteResponse, err error) {
+	fmt.Printf("delete request received for : %s\n", in.ID)
+
+	err = s.mgoSession.Delete(in.ID)
+	if err != nil {
+		return nil, fmt.Errorf("error in deleting mongo record id %s; %s", in.ID, err)
+	}
+	return &rpc.DeleteResponse{}, nil
 }
